@@ -193,6 +193,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt
   bootstrap-sass
   devise
   jbuilder (~> 2.5)

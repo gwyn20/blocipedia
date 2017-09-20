@@ -48,3 +48,6 @@ end
 gem 'bootstrap-sass'
 
 gem 'devise'
+
+# Used for encrypting passwords
+gem 'bcrypt'
