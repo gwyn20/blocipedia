@@ -4,16 +4,14 @@ class User < ApplicationRecord
     devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable
 
-    before_save { self.email = email.downcase if email.present? }
+    before_save { self.email = email.downcase }
+    after_create :send_user_emails
 
-    validates :name, length: { minimum: 1, maximum: 100 }, presence: true
-    validates :password, presence: true, length: { minimum: 6 }, if: "password_digest.nil?"
-    validates :password, length: { minimum: 6 }, allow_blank: true
 
-    validates :email,
-        presence: true,
-        uniqueness: { case_sensitive: false },
-        length: { minimum: 3, maximum: 254 }
+    private
+    
+    def send_user_emails
+        UserMailer.new_user(self).deliver_now
+    end
 
-    has_secure_password
 end
